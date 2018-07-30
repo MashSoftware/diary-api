@@ -9,6 +9,7 @@ from flask_negotiate import consumes, produces
 
 
 @app.route("/users", methods=['GET'])
+@produces('application/json')
 def get_users():
     """Get Users."""
     email_query = request.args.get('email_address', type=str)
@@ -28,6 +29,8 @@ def get_users():
 
 
 @app.route("/users", methods=['POST'])
+@consumes("application/json")
+@produces('application/json')
 def create_user():
     """Create a new User."""
     user_request = request.json
@@ -52,6 +55,7 @@ def create_user():
 
 
 @app.route("/users/<uuid:user_id>", methods=['GET'])
+@produces('application/json')
 def get_user(user_id):
     """Get a User for a given user_id."""
     user = User.query.get_or_404(str(user_id))
@@ -62,6 +66,8 @@ def get_user(user_id):
 
 
 @app.route("/users/<uuid:user_id>", methods=['PUT'])
+@consumes("application/json")
+@produces('application/json')
 def update_user(user_id):
     """Update a User for a given user_id."""
     user_request = request.json
@@ -94,6 +100,7 @@ def update_user(user_id):
 
 
 @app.route("/users/<uuid:user_id>", methods=['DELETE'])
+@produces('application/json')
 def delete_user(user_id):
     """Delete a User for a given user_id."""
     user = User.query.get_or_404(str(user_id))
