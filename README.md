@@ -1,5 +1,7 @@
 # Diary API
 
+[![Build Status](https://travis-ci.org/MashSoftware/diary-api.svg?branch=master)](https://travis-ci.org/MashSoftware/diary-api)
+
 ## Getting started
 
 ```shell
