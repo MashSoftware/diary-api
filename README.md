@@ -5,7 +5,9 @@
 ## Getting started
 
 ```shell
-pip install -r requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 export FLASK_APP=diary_api.py
 export FLASK_ENV=development
 export FLASK_RUN_PORT=5000
