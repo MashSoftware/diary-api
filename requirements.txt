@@ -21,5 +21,5 @@ pycparser==2.18           # via cffi
 python-dateutil==2.7.3    # via alembic
 python-editor==1.0.3      # via alembic
 six==1.11.0               # via bcrypt, python-dateutil
-sqlalchemy==1.2.10        # via alembic, flask-sqlalchemy
+sqlalchemy==1.2.11        # via alembic, flask-sqlalchemy
 werkzeug==0.14.1          # via flask
