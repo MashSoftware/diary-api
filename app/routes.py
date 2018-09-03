@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 
-import bcrypt
 from app import app, db
 from app.models import Child, User
 from flask import Response, request
@@ -76,7 +75,7 @@ def update_user(user_id):
     user = User.query.get_or_404(str(user_id))
 
     # Update user
-    user.password = bcrypt.hashpw(user_request["password"].encode('UTF-8'), bcrypt.gensalt())
+    user.set_password(user_request["password"])
     user.first_name = user_request["first_name"].title(),
     user.last_name = user_request["last_name"].title(),
     user.email_address = user_request["email_address"].lower()
@@ -117,3 +116,24 @@ def delete_user(user_id):
     return Response(response=None,
                     mimetype='application/json',
                     status=204)
+
+
+@app.route("/login", methods=['POST'])
+@consumes("application/json")
+@produces('application/json')
+def login_user():
+    """Authenticate User by email address and password."""
+    login_request = request.json
+
+    user = User.query.filter_by(email_address=login_request["email_address"].lower()).first()
+    if user is None:
+        return Response(response=None, status=401)
+
+    if user.check_password(login_request["password"]):
+        user.login_at = datetime.utcnow()
+        db.session.add(user)
+        db.session.commit()
+
+        return Response(response=repr(user), mimetype='application/json', status=200)
+    else:
+        return Response(response=None, status=401)
