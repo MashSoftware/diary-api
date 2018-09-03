@@ -70,7 +70,6 @@ class Child(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
-    gender = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     updated_at = db.Column(db.DateTime(timezone=True), nullable=True)
 
@@ -78,12 +77,11 @@ class Child(db.Model):
     events = db.relationship('Event', backref='child', lazy=True, passive_deletes=True)
 
     # Methods
-    def __init__(self, first_name, last_name, date_of_birth, gender):
+    def __init__(self, first_name, last_name, date_of_birth):
         self.child_id = str(uuid.uuid4())
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.date_of_birth = date_of_birth
-        self.gender = gender.title()
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
@@ -99,7 +97,6 @@ class Child(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth.isoformat(),
-            "gender": self.gender,
             "users": user_ids,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else self.updated_at,
