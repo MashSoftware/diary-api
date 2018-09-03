@@ -35,11 +35,11 @@ class User(db.Model):
     # Methods
     def __init__(self, password, first_name, last_name, email_address):
         self.user_id = str(uuid.uuid4())
-        self.password = bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt())
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.email_address = email_address.lower()
         self.created_at = datetime.utcnow()
+        self.set_password(password)
 
     def __repr__(self):
         return json.dumps(self.as_dict(), sort_keys=True, separators=(',', ':'))
@@ -60,6 +60,12 @@ class User(db.Model):
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else self.updated_at,
         }
+
+    def set_password(self, password):
+        self.password = bcrypt.hashpw(password.encode('UTF-8'), bcrypt.gensalt())
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('UTF-8'), self.password)
 
 
 class Child(db.Model):
