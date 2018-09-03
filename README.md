@@ -1,6 +1,7 @@
 # Diary API
 
 [![Build Status](https://travis-ci.org/MashSoftware/diary-api.svg?branch=master)](https://travis-ci.org/MashSoftware/diary-api)
+[![Requirements Status](https://requires.io/github/MashSoftware/diary-api/requirements.svg?branch=master)](https://requires.io/github/MashSoftware/diary-api/requirements/?branch=master)
 
 ## Getting started
 
