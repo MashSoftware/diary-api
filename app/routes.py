@@ -48,31 +48,31 @@ def create_user():
 
     # Create response
     response = Response(response=repr(user), mimetype='application/json', status=201)
-    response.headers["Location"] = "{0}/{1}".format(request.url, user.user_id)
+    response.headers["Location"] = "{0}/{1}".format(request.url, user.id)
 
     return response
 
 
-@app.route("/users/<uuid:user_id>", methods=['GET'])
+@app.route("/users/<uuid:id>", methods=['GET'])
 @produces('application/json')
-def get_user(user_id):
-    """Get a User for a given user_id."""
-    user = User.query.get_or_404(str(user_id))
+def get_user(id):
+    """Get a User for a given id."""
+    user = User.query.get_or_404(str(id))
 
     return Response(response=repr(user),
                     mimetype='application/json',
                     status=200)
 
 
-@app.route("/users/<uuid:user_id>", methods=['PUT'])
+@app.route("/users/<uuid:id>", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
-def update_user(user_id):
-    """Update a User for a given user_id."""
+def update_user(id):
+    """Update a User for a given id."""
     user_request = request.json
 
     # Retrieve existing user
-    user = User.query.get_or_404(str(user_id))
+    user = User.query.get_or_404(str(id))
 
     # Update user
     user.set_password(user_request["password"])
@@ -98,11 +98,11 @@ def update_user(user_id):
                     status=200)
 
 
-@app.route("/users/<uuid:user_id>", methods=['DELETE'])
+@app.route("/users/<uuid:id>", methods=['DELETE'])
 @produces('application/json')
-def delete_user(user_id):
-    """Delete a User for a given user_id."""
-    user = User.query.get_or_404(str(user_id))
+def delete_user(id):
+    """Delete a User for a given id."""
+    user = User.query.get_or_404(str(id))
 
     # If user has children that will have no users as a result of deleting this user, delete those children too.
     # This also results in events for that child being deleted too, by way of the foreign key cascade.

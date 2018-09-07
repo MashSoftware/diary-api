@@ -8,8 +8,8 @@ from sqlalchemy.dialects.postgresql import UUID
 
 user_child = db.Table(
     'user_child',
-    db.Column('user_id', UUID, db.ForeignKey('user_account.user_id', ondelete="CASCADE"), primary_key=True),
-    db.Column('child_id', UUID, db.ForeignKey('child.child_id', ondelete="CASCADE"), primary_key=True),
+    db.Column('user_id', UUID, db.ForeignKey('user_account.id', ondelete="CASCADE"), primary_key=True),
+    db.Column('child_id', UUID, db.ForeignKey('child.id', ondelete="CASCADE"), primary_key=True),
     db.Index('ix_user_child_child_id_user_id', 'child_id', 'user_id', unique=True)
 )
 
@@ -18,7 +18,7 @@ class User(db.Model):
     __tablename__ = 'user_account'
 
     # Fields
-    user_id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True)
     password = db.Column(db.Binary, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
@@ -34,7 +34,7 @@ class User(db.Model):
 
     # Methods
     def __init__(self, password, first_name, last_name, email_address):
-        self.user_id = str(uuid.uuid4())
+        self.id = str(uuid.uuid4())
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.email_address = email_address.lower()
@@ -47,10 +47,10 @@ class User(db.Model):
     def as_dict(self):
         child_ids = []
         for child in self.children:
-            child_ids.append(str(child.child_id))
+            child_ids.append(str(child.id))
 
         return {
-            "user_id": self.user_id,
+            "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "email_address": self.email_address,
@@ -72,7 +72,7 @@ class Child(db.Model):
     __tablename__ = 'child'
 
     # Fields
-    child_id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
@@ -84,7 +84,7 @@ class Child(db.Model):
 
     # Methods
     def __init__(self, first_name, last_name, date_of_birth):
-        self.child_id = str(uuid.uuid4())
+        self.id = str(uuid.uuid4())
         self.first_name = first_name.title()
         self.last_name = last_name.title()
         self.date_of_birth = date_of_birth
@@ -96,10 +96,10 @@ class Child(db.Model):
     def as_dict(self):
         user_ids = []
         for user in self.users:
-            user_ids.append(str(user.user_id))
+            user_ids.append(str(user.id))
 
         return {
-            "child_id": self.child_id,
+            "id": self.id,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "date_of_birth": self.date_of_birth.isoformat(),
@@ -112,9 +112,9 @@ class Child(db.Model):
 class Event(db.Model):
     __tablename__ = 'event'
     # Fields
-    event_id = db.Column(UUID, primary_key=True)
-    user_id = db.Column(UUID, db.ForeignKey('user_account.user_id', ondelete="SET NULL"), nullable=True, index=True)
-    child_id = db.Column(UUID, db.ForeignKey('child.child_id', ondelete="CASCADE"), nullable=False, index=True)
+    id = db.Column(UUID, primary_key=True)
+    user_id = db.Column(UUID, db.ForeignKey('user_account.id', ondelete="SET NULL"), nullable=True, index=True)
+    child_id = db.Column(UUID, db.ForeignKey('child.id', ondelete="CASCADE"), nullable=False, index=True)
     started_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     ended_at = db.Column(db.DateTime(timezone=True), nullable=True)
     description = db.Column(db.String, nullable=True)
@@ -123,7 +123,7 @@ class Event(db.Model):
 
     # Methods
     def __init__(self, user_id, child_id, started_at, ended_at, description):
-        self.event_id = str(uuid.uuid4())
+        self.id = str(uuid.uuid4())
         self.user_id = str(uuid.UUID(user_id, version=4))
         self.child_id = str(uuid.UUID(child_id, version=4))
         self.started_at = started_at
@@ -133,7 +133,7 @@ class Event(db.Model):
 
     def as_dict(self):
         return {
-            "event_id": self.event_id,
+            "id": self.id,
             "user_id": self.user_id,
             "child_id": self.child_id,
             "started_at": self.started_at.isoformat(),
