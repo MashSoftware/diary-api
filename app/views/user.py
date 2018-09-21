@@ -1,13 +1,17 @@
 import json
 from datetime import datetime
 
-from app import app, db
-from app.models import Child, User
-from flask import Response, request
+from flask import Blueprint, Response, request
 from flask_negotiate import consumes, produces
+from werkzeug.exceptions import Unauthorized
+
+from app import db
+from app.models import Child, User
+
+user = Blueprint('user', __name__)
 
 
-@app.route("/users", methods=['GET'])
+@user.route("/users", methods=['GET'])
 @produces('application/json')
 def get_users():
     """Get Users."""
@@ -27,7 +31,7 @@ def get_users():
                     status=200)
 
 
-@app.route("/users", methods=['POST'])
+@user.route("/users", methods=['POST'])
 @consumes("application/json")
 @produces('application/json')
 def create_user():
@@ -53,7 +57,7 @@ def create_user():
     return response
 
 
-@app.route("/users/<uuid:id>", methods=['GET'])
+@user.route("/users/<uuid:id>", methods=['GET'])
 @produces('application/json')
 def get_user(id):
     """Get a User for a given id."""
@@ -64,7 +68,7 @@ def get_user(id):
                     status=200)
 
 
-@app.route("/users/<uuid:id>", methods=['PUT'])
+@user.route("/users/<uuid:id>", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
 def update_user(id):
@@ -98,7 +102,7 @@ def update_user(id):
                     status=200)
 
 
-@app.route("/users/<uuid:id>", methods=['DELETE'])
+@user.route("/users/<uuid:id>", methods=['DELETE'])
 @produces('application/json')
 def delete_user(id):
     """Delete a User for a given id."""
@@ -118,7 +122,7 @@ def delete_user(id):
                     status=204)
 
 
-@app.route("/login", methods=['POST'])
+@user.route("/login", methods=['POST'])
 @consumes("application/json")
 @produces('application/json')
 def login_user():
@@ -127,7 +131,7 @@ def login_user():
 
     user = User.query.filter_by(email_address=login_request["email_address"].lower()).first()
     if user is None:
-        return Response(response=None, status=401)
+        raise Unauthorized()
 
     if user.check_password(login_request["password"]):
         user.login_at = datetime.utcnow()
@@ -136,4 +140,4 @@ def login_user():
 
         return Response(response=repr(user), mimetype='application/json', status=200)
     else:
-        return Response(response=None, status=401)
+        raise Unauthorized()
