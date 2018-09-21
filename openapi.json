@@ -64,7 +64,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/User"
+                                        "$ref": "#/components/schemas/UserResponse"
                                     }
                                 }
                             }
@@ -88,16 +88,34 @@
                 "tags": [
                     "Users"
                 ],
+                "requestBody": {
+                    "description": "New user data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
-                        "description": "Null response"
+                        "description": "Newly created user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
                     },
                     "default": {
                         "description": "unexpected error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
@@ -105,7 +123,7 @@
                 }
             }
         },
-        "/users/{user_id}": {
+        "/users/{id}": {
             "get": {
                 "summary": "Retrieves a specific user",
                 "operationId": "get_user",
@@ -114,7 +132,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to retrieve",
@@ -130,7 +148,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserResponse"
                                 }
                             }
                         }
@@ -155,7 +173,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to update",
@@ -165,13 +183,24 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "User data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Expected response to a valid request",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserResponse"
                                 }
                             }
                         }
@@ -196,7 +225,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to delete",
@@ -207,15 +236,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Expected response to a valid request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "Expected response to a valid request"
                     },
                     "default": {
                         "description": "unexpected error",
@@ -239,7 +261,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "user_id",
+                        "name": "id",
                         "in": "query",
                         "description": "Users ID",
                         "required": true,
@@ -265,7 +287,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Child"
+                                        "$ref": "#/components/schemas/ChildResponse"
                                     }
                                 }
                             }
@@ -289,16 +311,34 @@
                 "tags": [
                     "Children"
                 ],
+                "requestBody": {
+                    "description": "New child data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChildRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
-                        "description": "Null response"
+                        "description": "Newly created child",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChildResponse"
+                                }
+                            }
+                        }
                     },
                     "default": {
                         "description": "unexpected error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Child"
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
@@ -306,7 +346,7 @@
                 }
             }
         },
-        "/children/{child_id}": {
+        "/children/{id}": {
             "get": {
                 "summary": "Retrieves a specific child",
                 "operationId": "get_child",
@@ -315,7 +355,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "child_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the child to retrieve",
@@ -331,7 +371,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Child"
+                                    "$ref": "#/components/schemas/ChildResponse"
                                 }
                             }
                         }
@@ -356,7 +396,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "child_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the child to update",
@@ -372,7 +412,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Child"
+                                    "$ref": "#/components/schemas/ChildResponse"
                                 }
                             }
                         }
@@ -397,7 +437,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "child_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the child to delete",
@@ -408,15 +448,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Expected response to a valid request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Child"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "Expected response to a valid request"
                     },
                     "default": {
                         "description": "unexpected error",
@@ -440,9 +473,9 @@
                 ],
                 "parameters": [
                     {
-                        "name": "child_id",
+                        "name": "id",
                         "in": "query",
-                        "description": "Child's ID",
+                        "description": "ChildResponse's ID",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -466,7 +499,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Event"
+                                        "$ref": "#/components/schemas/EventResponse"
                                     }
                                 }
                             }
@@ -490,16 +523,34 @@
                 "tags": [
                     "Events"
                 ],
+                "requestBody": {
+                    "description": "New event data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
-                        "description": "Null response"
+                        "description": "Newly created event",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponse"
+                                }
+                            }
+                        }
                     },
                     "default": {
                         "description": "unexpected error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Event"
+                                    "$ref": "#/components/schemas/Error"
                                 }
                             }
                         }
@@ -507,7 +558,7 @@
                 }
             }
         },
-        "/events/{event_id}": {
+        "/events/{id}": {
             "get": {
                 "summary": "Retrieves a specific event",
                 "operationId": "get_event",
@@ -516,7 +567,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "event_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the event to retrieve",
@@ -532,7 +583,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Event"
+                                    "$ref": "#/components/schemas/EventResponse"
                                 }
                             }
                         }
@@ -557,7 +608,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "event_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the event to update",
@@ -573,7 +624,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Event"
+                                    "$ref": "#/components/schemas/EventResponse"
                                 }
                             }
                         }
@@ -598,10 +649,10 @@
                 ],
                 "parameters": [
                     {
-                        "name": "event_id",
+                        "name": "id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the event to delete",
+                        "description": "The ID of the event to delete",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -609,15 +660,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Expected response to a valid request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Event"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "Expected response to a valid request"
                     },
                     "default": {
                         "description": "unexpected error",
@@ -635,13 +679,40 @@
     },
     "components": {
         "schemas": {
-            "User": {
+            "UserRequest": {
                 "required": [
                     "email_address",
                     "password",
                     "first_name",
                     "last_name"
                 ],
+                "properties": {
+                    "email_address": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "children": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                }
+            },
+            "UserResponse": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -688,12 +759,35 @@
                     }
                 }
             },
-            "Child": {
+            "ChildRequest": {
                 "required": [
                     "first_name",
                     "last_name",
                     "date_of_birth"
                 ],
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "date_of_birth": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "users": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                }
+            },
+            "ChildResponse": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -728,13 +822,35 @@
                     }
                 }
             },
-            "Event": {
+            "EventRequest": {
                 "required": [
-                    "user_id",
                     "child_id",
-                    "started_at",
-                    "ended_at"
+                    "user_id",
+                    "started_at"
                 ],
+                "properties": {
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "child_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "started_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ended_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "EventResponse": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -753,10 +869,7 @@
                         "format": "date-time"
                     },
                     "ended_at": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": "string",
                         "format": "date-time"
                     },
                     "description": {
@@ -777,7 +890,7 @@
                     "message"
                 ],
                 "properties": {
-                    "message": {
+                    "description": {
                         "type": "string"
                     }
                 }
