@@ -3,12 +3,18 @@ from datetime import datetime
 
 from flask import Blueprint, Response, request
 from flask_negotiate import consumes, produces
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Unauthorized, BadRequest
 
 from app import db
 from app.models import Child, User
+from jsonschema import FormatChecker, ValidationError, validate
 
 user = Blueprint('user', __name__)
+
+# JSON schema for user requests
+with open('openapi.json') as json_file:
+    openapi = json.load(json_file)
+user_schema = openapi["components"]["schemas"]["UserRequest"]
 
 
 @user.route("/users", methods=['GET'])
@@ -37,6 +43,12 @@ def get_users():
 def create_user():
     """Create a new User."""
     user_request = request.json
+
+    # Validate request against schema
+    try:
+        validate(user_request, user_schema, format_checker=FormatChecker())
+    except ValidationError as e:
+        raise BadRequest()
 
     # Create a new user object
     user = User(
@@ -74,6 +86,12 @@ def get_user(id):
 def update_user(id):
     """Update a User for a given id."""
     user_request = request.json
+
+    # Validate request against schema
+    try:
+        validate(user_request, user_schema, format_checker=FormatChecker())
+    except ValidationError as e:
+        raise BadRequest()
 
     # Retrieve existing user
     user = User.query.get_or_404(str(id))
