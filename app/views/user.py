@@ -48,7 +48,7 @@ def create_user():
     try:
         validate(user_request, user_schema, format_checker=FormatChecker())
     except ValidationError as e:
-        raise BadRequest()
+        raise BadRequest(e.message)
 
     # Create a new user object
     user = User(
@@ -91,7 +91,7 @@ def update_user(id):
     try:
         validate(user_request, user_schema, format_checker=FormatChecker())
     except ValidationError as e:
-        raise BadRequest()
+        raise BadRequest(e.message)
 
     # Retrieve existing user
     user = User.query.get_or_404(str(id))
