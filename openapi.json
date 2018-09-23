@@ -827,7 +827,8 @@
                 "required": [
                     "child_id",
                     "user_id",
-                    "started_at"
+                    "started_at",
+                    "ended_at"
                 ],
                 "properties": {
                     "user_id": {
