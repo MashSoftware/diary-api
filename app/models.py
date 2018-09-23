@@ -131,6 +131,9 @@ class Event(db.Model):
         self.description = description
         self.created_at = datetime.utcnow()
 
+    def __repr__(self):
+        return json.dumps(self.as_dict(), sort_keys=True, separators=(',', ':'))
+
     def as_dict(self):
         return {
             "id": self.id,
