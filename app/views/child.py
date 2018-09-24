@@ -58,7 +58,7 @@ def create_child():
         if user:
             users.append(user)
         else:
-            raise BadRequest()
+            raise BadRequest("'{0}' is not a valid user ID".format(user_id))
     child.users = users
 
     # Commit child to db
@@ -112,7 +112,7 @@ def update_child(id):
         if user:
             users.append(user)
         else:
-            raise BadRequest()
+            raise BadRequest("'{0}' is not a valid user ID".format(user_id))
     child.users = users
 
     # Commit child to db

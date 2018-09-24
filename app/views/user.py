@@ -116,7 +116,7 @@ def update_user(id):
         if child:
             children.append(child)
         else:
-            raise BadRequest()
+            raise BadRequest("'{0}' is not a valid child ID".format(child_id))
     user.children = children
 
     try:
