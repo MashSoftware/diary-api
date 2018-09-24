@@ -3,7 +3,8 @@ from datetime import datetime
 
 from flask import Blueprint, Response, request
 from flask_negotiate import consumes, produces
-from werkzeug.exceptions import Unauthorized, BadRequest
+from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import BadRequest, Conflict, Unauthorized
 
 from app import db
 from app.models import Child, User
@@ -15,6 +16,7 @@ user = Blueprint('user', __name__)
 with open('openapi.json') as json_file:
     openapi = json.load(json_file)
 user_schema = openapi["components"]["schemas"]["UserRequest"]
+login_schema = openapi["components"]["schemas"]["LoginRequest"]
 
 
 @user.route("/users", methods=['GET'])
@@ -58,9 +60,13 @@ def create_user():
         email_address=user_request["email_address"]
     )
 
-    # Commit user to db
-    db.session.add(user)
-    db.session.commit()
+    try:
+        # Commit user to db
+        db.session.add(user)
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        raise Conflict("'email_address' is already registered.")
 
     # Create response
     response = Response(response=repr(user), mimetype='application/json', status=201)
@@ -109,11 +115,17 @@ def update_user(id):
         child = Child.query.get(str(child_id))
         if child:
             children.append(child)
+        else:
+            raise BadRequest()
     user.children = children
 
-    # Commit user to db
-    db.session.add(user)
-    db.session.commit()
+    try:
+        # Commit user to db
+        db.session.add(user)
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        raise Conflict("'email_address' is already registered.")
 
     return Response(response=repr(user),
                     mimetype='application/json',
@@ -146,6 +158,12 @@ def delete_user(id):
 def login_user():
     """Authenticate User by email address and password."""
     login_request = request.json
+
+    # Validate request against schema
+    try:
+        validate(login_request, login_schema, format_checker=FormatChecker())
+    except ValidationError as e:
+        raise BadRequest(e.message)
 
     user = User.query.filter_by(email_address=login_request["email_address"].lower()).first()
     if user is None:
