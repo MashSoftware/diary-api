@@ -252,6 +252,58 @@
                 }
             }
         },
+        "/login": {
+            "post": {
+                "summary": "Authenticate a user",
+                "operationId": "login_user",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "description": "User credentials to authenticate",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/children": {
             "get": {
                 "summary": "Retrieves a list of children",
@@ -743,11 +795,13 @@
                     },
                     "activated_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "login_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "created_at": {
                         "type": "string",
@@ -755,7 +809,24 @@
                     },
                     "updated_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                }
+            },
+            "LoginRequest": {
+                "required": [
+                    "email_address",
+                    "password"
+                ],
+                "properties": {
+                    "email_address": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
                     }
                 }
             },
@@ -763,8 +834,7 @@
                 "required": [
                     "first_name",
                     "last_name",
-                    "date_of_birth",
-                    "users"
+                    "date_of_birth"
                 ],
                 "properties": {
                     "first_name": {
@@ -819,7 +889,8 @@
                     },
                     "updated_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     }
                 }
             },
@@ -827,8 +898,7 @@
                 "required": [
                     "child_id",
                     "user_id",
-                    "started_at",
-                    "ended_at"
+                    "started_at"
                 ],
                 "properties": {
                     "user_id": {
@@ -845,10 +915,12 @@
                     },
                     "ended_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     }
                 }
             },
@@ -860,7 +932,8 @@
                     },
                     "user_id": {
                         "type": "string",
-                        "format": "uuid"
+                        "format": "uuid",
+                        "nullable": true
                     },
                     "child_id": {
                         "type": "string",
@@ -872,10 +945,12 @@
                     },
                     "ended_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "nullable": true
                     },
                     "created_at": {
                         "type": "string",
@@ -883,7 +958,8 @@
                     },
                     "updated_at": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "nullable": true
                     }
                 }
             },
