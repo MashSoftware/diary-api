@@ -70,8 +70,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -110,8 +110,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -153,8 +153,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -205,8 +205,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -239,8 +239,8 @@
                     "204": {
                         "description": "Expected response to a valid request"
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -345,8 +345,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -385,8 +385,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -428,8 +428,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -469,8 +469,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -503,8 +503,8 @@
                     "204": {
                         "description": "Expected response to a valid request"
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -557,8 +557,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -597,8 +597,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -640,8 +640,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -681,8 +681,8 @@
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -715,8 +715,8 @@
                     "204": {
                         "description": "Expected response to a valid request"
                     },
-                    "default": {
-                        "description": "unexpected error",
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {
