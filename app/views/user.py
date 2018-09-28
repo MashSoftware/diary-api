@@ -144,13 +144,15 @@ def update_user_password(id):
         user.set_password(password_request["new_password"])
         user.updated_at = datetime.utcnow()
 
-    # Commit user to db
-    db.session.add(user)
-    db.session.commit()
+        # Commit user to db
+        db.session.add(user)
+        db.session.commit()
 
-    return Response(response=repr(user),
-                    mimetype='application/json',
-                    status=200)
+        return Response(response=repr(user),
+                        mimetype='application/json',
+                        status=200)
+    else:
+        raise Unauthorized()
 
 
 @user.route("/users/<uuid:id>", methods=['DELETE'])
