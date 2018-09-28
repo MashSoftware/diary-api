@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import BadRequest, Conflict, Unauthorized
 
 from app import db
-from app.models import Child, User
+from app.models import User
 from jsonschema import FormatChecker, ValidationError, validate
 
 user = Blueprint('user', __name__)
@@ -16,6 +16,8 @@ user = Blueprint('user', __name__)
 with open('openapi.json') as json_file:
     openapi = json.load(json_file)
 user_schema = openapi["components"]["schemas"]["UserRequest"]
+profile_schema = openapi["components"]["schemas"]["ProfileRequest"]
+password_schema = openapi["components"]["schemas"]["PasswordRequest"]
 login_schema = openapi["components"]["schemas"]["LoginRequest"]
 
 
@@ -86,16 +88,16 @@ def get_user(id):
                     status=200)
 
 
-@user.route("/users/<uuid:id>", methods=['PUT'])
+@user.route("/users/<uuid:id>/profile", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
-def update_user(id):
-    """Update a User for a given id."""
-    user_request = request.json
+def update_user_profile(id):
+    """Update a User profile for a given id."""
+    profile_request = request.json
 
     # Validate request against schema
     try:
-        validate(user_request, user_schema, format_checker=FormatChecker())
+        validate(profile_request, profile_schema, format_checker=FormatChecker())
     except ValidationError as e:
         raise BadRequest(e.message)
 
@@ -103,21 +105,10 @@ def update_user(id):
     user = User.query.get_or_404(str(id))
 
     # Update user
-    user.set_password(user_request["password"])
-    user.first_name = user_request["first_name"].title(),
-    user.last_name = user_request["last_name"].title(),
-    user.email_address = user_request["email_address"].lower()
+    user.first_name = profile_request["first_name"].title(),
+    user.last_name = profile_request["last_name"].title(),
+    user.email_address = profile_request["email_address"].lower()
     user.updated_at = datetime.utcnow()
-
-    # Add children to user
-    children = []
-    for child_id in user_request["children"]:
-        child = Child.query.get(str(child_id))
-        if child:
-            children.append(child)
-        else:
-            raise BadRequest("'{0}' is not a valid child ID".format(child_id))
-    user.children = children
 
     try:
         # Commit user to db
@@ -126,6 +117,36 @@ def update_user(id):
     except IntegrityError as e:
         db.session.rollback()
         raise Conflict("'email_address' is already registered.")
+
+    return Response(response=repr(user),
+                    mimetype='application/json',
+                    status=200)
+
+
+@user.route("/users/<uuid:id>/password", methods=['PUT'])
+@consumes("application/json")
+@produces('application/json')
+def update_user_password(id):
+    """Update a User password for a given id."""
+    password_request = request.json
+
+    # Validate request against schema
+    try:
+        validate(password_request, password_schema, format_checker=FormatChecker())
+    except ValidationError as e:
+        raise BadRequest(e.message)
+
+    # Retrieve existing user
+    user = User.query.get_or_404(str(id))
+
+    # Update user
+    if user.check_password(password_request["current_password"]):
+        user.set_password(password_request["new_password"])
+        user.updated_at = datetime.utcnow()
+
+    # Commit user to db
+    db.session.add(user)
+    db.session.commit()
 
     return Response(response=repr(user),
                     mimetype='application/json',

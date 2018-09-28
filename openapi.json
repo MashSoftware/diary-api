@@ -165,9 +165,45 @@
                     }
                 }
             },
+            "delete": {
+                "summary": "Deletes a specific user",
+                "operationId": "delete_user",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The id of the user to delete",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Expected response to a valid request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/profile": {
             "put": {
-                "summary": "Updates a specific user",
-                "operationId": "update_user",
+                "summary": "Updates a specifc users profile",
+                "operationId": "update_user_profile",
                 "tags": [
                     "Users"
                 ],
@@ -184,12 +220,12 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "User data to update",
+                    "description": "User profile data to update",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserRequest"
+                                "$ref": "#/components/schemas/ProfileRequest"
                             }
                         }
                     }
@@ -216,10 +252,12 @@
                         }
                     }
                 }
-            },
-            "delete": {
-                "summary": "Deletes a specific user",
-                "operationId": "delete_user",
+            }
+        },
+        "/users/{id}/password": {
+            "put": {
+                "summary": "Updates a specifc users password",
+                "operationId": "update_user_password",
                 "tags": [
                     "Users"
                 ],
@@ -228,16 +266,34 @@
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the user to delete",
+                        "description": "The id of the user to update",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "User password data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "204": {
-                        "description": "Expected response to a valid request"
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -811,6 +867,41 @@
                         "type": "string",
                         "format": "date-time",
                         "nullable": true
+                    }
+                }
+            },
+            "ProfileRequest": {
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "email_address"
+                ],
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_address": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                }
+            },
+            "PasswordRequest": {
+                "required": [
+                    "current_password",
+                    "new_password"
+                ],
+                "properties": {
+                    "current_password": {
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "new_password": {
+                        "type": "string",
+                        "format": "password"
                     }
                 }
             },
