@@ -1009,7 +1009,8 @@
                 "required": [
                     "child_id",
                     "user_id",
-                    "started_at"
+                    "started_at",
+                    "type"
                 ],
                 "properties": {
                     "user_id": {
@@ -1020,6 +1021,14 @@
                         "type": "string",
                         "format": "uuid"
                     },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "sleep",
+                            "feed",
+                            "change"
+                        ]
+                    },
                     "started_at": {
                         "type": "string",
                         "format": "date-time"
@@ -1027,6 +1036,18 @@
                     "ended_at": {
                         "type": "string",
                         "format": "date-time",
+                        "nullable": true
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "unit": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "nullable": true
                     },
                     "description": {
@@ -1050,6 +1071,14 @@
                         "type": "string",
                         "format": "uuid"
                     },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "sleep",
+                            "feed",
+                            "change"
+                        ]
+                    },
                     "started_at": {
                         "type": "string",
                         "format": "date-time"
@@ -1057,6 +1086,15 @@
                     "ended_at": {
                         "type": "string",
                         "format": "date-time",
+                        "nullable": true
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "unit": {
+                        "type": "string",
                         "nullable": true
                     },
                     "description": {
