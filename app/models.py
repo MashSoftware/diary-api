@@ -115,17 +115,21 @@ class Event(db.Model):
     id = db.Column(UUID, primary_key=True)
     user_id = db.Column(UUID, db.ForeignKey('user_account.id', ondelete="SET NULL"), nullable=True, index=True)
     child_id = db.Column(UUID, db.ForeignKey('child.id', ondelete="CASCADE"), nullable=False, index=True)
+    type = db.Column(db.String, nullable=False)
     started_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     ended_at = db.Column(db.DateTime(timezone=True), nullable=True)
+    amount = db.Column(db.Float, nullable=True)
+    unit = db.Column(db.String, nullable=True)
     description = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     updated_at = db.Column(db.DateTime(timezone=True), nullable=True)
 
     # Methods
-    def __init__(self, user_id, child_id, started_at, description):
+    def __init__(self, user_id, child_id, type, started_at, description):
         self.id = str(uuid.uuid4())
         self.user_id = str(uuid.UUID(user_id, version=4))
         self.child_id = str(uuid.UUID(child_id, version=4))
+        self.type = type
         self.started_at = started_at
         self.description = description
         self.created_at = datetime.utcnow()
@@ -138,8 +142,11 @@ class Event(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "child_id": self.child_id,
+            "type": self.type,
             "started_at": self.started_at.isoformat(),
             "ended_at": self.ended_at.isoformat() if self.ended_at else self.ended_at,
+            "amount": self.amount,
+            "unit": self.unit,
             "description": self.description,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else self.updated_at
