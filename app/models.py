@@ -125,13 +125,12 @@ class Event(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), nullable=True)
 
     # Methods
-    def __init__(self, user_id, child_id, type, started_at, description):
+    def __init__(self, user_id, child_id, type, started_at):
         self.id = str(uuid.uuid4())
         self.user_id = str(uuid.UUID(user_id, version=4))
         self.child_id = str(uuid.UUID(child_id, version=4))
         self.type = type
         self.started_at = started_at
-        self.description = description
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
