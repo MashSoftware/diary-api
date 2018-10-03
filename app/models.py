@@ -120,6 +120,7 @@ class Event(db.Model):
     ended_at = db.Column(db.DateTime(timezone=True), nullable=True)
     amount = db.Column(db.Float, nullable=True)
     unit = db.Column(db.String, nullable=True)
+    side = db.Column(db.String, nullable=True)
     description = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     updated_at = db.Column(db.DateTime(timezone=True), nullable=True)
@@ -146,6 +147,7 @@ class Event(db.Model):
             "ended_at": self.ended_at.isoformat() if self.ended_at else self.ended_at,
             "amount": self.amount,
             "unit": self.unit,
+            "side": self.side,
             "description": self.description,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else self.updated_at

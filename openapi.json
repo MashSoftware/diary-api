@@ -1044,10 +1044,11 @@
                         "nullable": true
                     },
                     "unit": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "side": {
+                        "type": "string",
                         "nullable": true
                     },
                     "description": {
@@ -1094,6 +1095,10 @@
                         "nullable": true
                     },
                     "unit": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "side": {
                         "type": "string",
                         "nullable": true
                     },
