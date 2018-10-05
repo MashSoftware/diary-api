@@ -136,6 +136,9 @@ def update_user_password(id):
     except ValidationError as e:
         raise BadRequest(e.message)
 
+    if password_request["new_password"] == password_request["current_password"]:
+        raise BadRequest("New password must be different to current password")
+
     # Retrieve existing user
     user = User.query.get_or_404(str(id))
 
