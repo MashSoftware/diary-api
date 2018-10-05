@@ -21,7 +21,7 @@ password_schema = openapi["components"]["schemas"]["PasswordRequest"]
 login_schema = openapi["components"]["schemas"]["LoginRequest"]
 
 
-@user.route("/users", methods=['GET'])
+@user.route("", methods=['GET'])
 @produces('application/json')
 def get_users():
     """Get Users."""
@@ -41,7 +41,7 @@ def get_users():
                     status=200)
 
 
-@user.route("/users", methods=['POST'])
+@user.route("", methods=['POST'])
 @consumes("application/json")
 @produces('application/json')
 def create_user():
@@ -77,7 +77,7 @@ def create_user():
     return response
 
 
-@user.route("/users/<uuid:id>", methods=['GET'])
+@user.route("/<uuid:id>", methods=['GET'])
 @produces('application/json')
 def get_user(id):
     """Get a User for a given id."""
@@ -88,7 +88,7 @@ def get_user(id):
                     status=200)
 
 
-@user.route("/users/<uuid:id>/profile", methods=['PUT'])
+@user.route("/<uuid:id>/profile", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
 def update_user_profile(id):
@@ -123,7 +123,7 @@ def update_user_profile(id):
                     status=200)
 
 
-@user.route("/users/<uuid:id>/password", methods=['PUT'])
+@user.route("/<uuid:id>/password", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
 def update_user_password(id):
@@ -155,7 +155,7 @@ def update_user_password(id):
         raise Unauthorized()
 
 
-@user.route("/users/<uuid:id>", methods=['DELETE'])
+@user.route("/<uuid:id>", methods=['DELETE'])
 @produces('application/json')
 def delete_user(id):
     """Delete a User for a given id."""
@@ -173,30 +173,3 @@ def delete_user(id):
     return Response(response=None,
                     mimetype='application/json',
                     status=204)
-
-
-@user.route("/login", methods=['POST'])
-@consumes("application/json")
-@produces('application/json')
-def login_user():
-    """Authenticate User by email address and password."""
-    login_request = request.json
-
-    # Validate request against schema
-    try:
-        validate(login_request, login_schema, format_checker=FormatChecker())
-    except ValidationError as e:
-        raise BadRequest(e.message)
-
-    user = User.query.filter_by(email_address=login_request["email_address"].lower()).first()
-    if user is None:
-        raise Unauthorized()
-
-    if user.check_password(login_request["password"]):
-        user.login_at = datetime.utcnow()
-        db.session.add(user)
-        db.session.commit()
-
-        return Response(response=repr(user), mimetype='application/json', status=200)
-    else:
-        raise Unauthorized()

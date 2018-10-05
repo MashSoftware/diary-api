@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import date, datetime
 
 from flask import Blueprint, Response, request
 from flask_negotiate import consumes, produces
@@ -17,7 +17,7 @@ with open('openapi.json') as json_file:
 child_schema = openapi["components"]["schemas"]["ChildRequest"]
 
 
-@child.route("/children", methods=['GET'])
+@child.route("", methods=['GET'])
 @produces('application/json')
 def get_children():
     """Get Children."""
@@ -31,7 +31,7 @@ def get_children():
                     status=200)
 
 
-@child.route("/children", methods=['POST'])
+@child.route("", methods=['POST'])
 @consumes("application/json")
 @produces('application/json')
 def create_child():
@@ -43,6 +43,9 @@ def create_child():
         validate(child_request, child_schema, format_checker=FormatChecker())
     except ValidationError as e:
         raise BadRequest(e.message)
+
+    if date.fromisoformat(child_request["date_of_birth"]) > date.today():
+        raise BadRequest('Date of birth must be in the past')
 
     # Create a new child object
     child = Child(
@@ -72,7 +75,7 @@ def create_child():
     return response
 
 
-@child.route("/children/<uuid:id>", methods=['GET'])
+@child.route("/<uuid:id>", methods=['GET'])
 @produces('application/json')
 def get_child(id):
     """Get a Child for a given id."""
@@ -83,7 +86,7 @@ def get_child(id):
                     status=200)
 
 
-@child.route("/children/<uuid:id>", methods=['PUT'])
+@child.route("/<uuid:id>", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
 def update_child(id):
@@ -124,7 +127,7 @@ def update_child(id):
                     status=200)
 
 
-@child.route("/children/<uuid:id>", methods=['DELETE'])
+@child.route("/<uuid:id>", methods=['DELETE'])
 @produces('application/json')
 def delete_child(id):
     """Delete a Child for a given id."""

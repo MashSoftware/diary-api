@@ -328,7 +328,7 @@
                 }
             }
         },
-        "/login": {
+        "/auth/login": {
             "post": {
                 "summary": "Authenticate a user",
                 "operationId": "login_user",
@@ -1025,6 +1025,7 @@
                         "type": "string",
                         "enum": [
                             "sleep",
+                            "breastfeed",
                             "feed",
                             "change"
                         ]
@@ -1076,6 +1077,7 @@
                         "type": "string",
                         "enum": [
                             "sleep",
+                            "breastfeed",
                             "feed",
                             "change"
                         ]
