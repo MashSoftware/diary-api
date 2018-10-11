@@ -116,6 +116,8 @@ class Event(db.Model):
     user_id = db.Column(UUID, db.ForeignKey('user_account.id', ondelete="SET NULL"), nullable=True, index=True)
     child_id = db.Column(UUID, db.ForeignKey('child.id', ondelete="CASCADE"), nullable=False, index=True)
     type = db.Column(db.String, nullable=False)
+    feed_type = db.Column(db.String, nullable=True)
+    change_type = db.Column(db.String, nullable=True)
     started_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     ended_at = db.Column(db.DateTime(timezone=True), nullable=True)
     amount = db.Column(db.Float, nullable=True)
@@ -143,6 +145,8 @@ class Event(db.Model):
             "user_id": self.user_id,
             "child_id": self.child_id,
             "type": self.type,
+            "feed_type": self.feed_type,
+            "change_type": self.change_type,
             "started_at": self.started_at.isoformat(),
             "ended_at": self.ended_at.isoformat() if self.ended_at else self.ended_at,
             "amount": self.amount,
