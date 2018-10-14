@@ -6,7 +6,7 @@ from flask_negotiate import consumes, produces
 from werkzeug.exceptions import BadRequest
 
 from app import db
-from app.models import Child, User
+from app.models import Child, Event, User
 from jsonschema import FormatChecker, ValidationError, validate
 
 child = Blueprint('child', __name__)
@@ -15,20 +15,7 @@ child = Blueprint('child', __name__)
 with open('openapi.json') as json_file:
     openapi = json.load(json_file)
 child_schema = openapi["components"]["schemas"]["ChildRequest"]
-
-
-@child.route("", methods=['GET'])
-@produces('application/json')
-def get_children():
-    """Get Children."""
-    children = Child.query.order_by(Child.created_at).all()
-    result = []
-    for child in children:
-        result.append(child.as_dict())
-
-    return Response(response=json.dumps(result, sort_keys=True, separators=(',', ':')),
-                    mimetype='application/json',
-                    status=200)
+event_schema = openapi["components"]["schemas"]["EventRequest"]
 
 
 @child.route("", methods=['POST'])
@@ -75,21 +62,21 @@ def create_child():
     return response
 
 
-@child.route("/<uuid:id>", methods=['GET'])
+@child.route("/<uuid:child_id>", methods=['GET'])
 @produces('application/json')
-def get_child(id):
+def get_child(child_id):
     """Get a Child for a given id."""
-    child = Child.query.get_or_404(str(id))
+    child = Child.query.get_or_404(str(child_id))
 
     return Response(response=repr(child),
                     mimetype='application/json',
                     status=200)
 
 
-@child.route("/<uuid:id>", methods=['PUT'])
+@child.route("/<uuid:child_id>", methods=['PUT'])
 @consumes("application/json")
 @produces('application/json')
-def update_child(id):
+def update_child(child_id):
     """Update a Child for a given id."""
     child_request = request.json
 
@@ -100,7 +87,7 @@ def update_child(id):
         raise BadRequest(e.message)
 
     # Retrieve existing child
-    child = Child.query.get_or_404(str(id))
+    child = Child.query.get_or_404(str(child_id))
 
     # Update child
     child.first_name = child_request["first_name"].title(),
@@ -127,13 +114,118 @@ def update_child(id):
                     status=200)
 
 
-@child.route("/<uuid:id>", methods=['DELETE'])
+@child.route("/<uuid:child_id>", methods=['DELETE'])
 @produces('application/json')
-def delete_child(id):
+def delete_child(child_id):
     """Delete a Child for a given id."""
-    child = Child.query.get_or_404(str(id))
+    child = Child.query.get_or_404(str(child_id))
 
     db.session.delete(child)
+    db.session.commit()
+    return Response(response=None,
+                    mimetype='application/json',
+                    status=204)
+
+
+@child.route("/<uuid:child_id>/events", methods=['GET'])
+@produces('application/json')
+def get_events(child_id):
+    """Get Events for a Child."""
+    events = Event.query.filter_by(child_id=str(child_id)).order_by(Event.started_at.desc()).all()
+    result = []
+    for event in events:
+        result.append(event.as_dict())
+
+    return Response(response=json.dumps(result, sort_keys=True, separators=(',', ':')),
+                    mimetype='application/json',
+                    status=200)
+
+
+@child.route("/<uuid:child_id>/events", methods=['POST'])
+@consumes("application/json")
+@produces('application/json')
+def create_event(child_id):
+    """Create a new Event."""
+    event_request = request.json
+
+    # Validate request against schema
+    # try:
+    #     validate(event_request, event_schema, format_checker=FormatChecker())
+    # except ValidationError as e:
+    #     raise BadRequest(e.message)
+
+    # Create a new event object
+    event = Event(
+        user_id=event_request["user_id"],
+        child_id=str(child_id),
+        type=event_request["type"],
+        started_at=event_request["started_at"]
+    )
+
+    event.ended_at = event_request["ended_at"] if "ended_at" in event_request else None
+    event.feed_type = event_request["feed_type"] if "feed_type" in event_request else None
+    event.change_type = event_request["change_type"] if "change_type" in event_request else None
+    event.amount = event_request["amount"] if "amount" in event_request else None
+    event.unit = event_request["unit"] if "unit" in event_request else None
+    event.side = event_request["side"] if "side" in event_request else None
+    event.notes = event_request["notes"] if "notes" in event_request else None
+
+    # Commit event to db
+    db.session.add(event)
+    db.session.commit()
+
+    # Create response
+    response = Response(response=repr(event), mimetype='application/json', status=201)
+    response.headers["Location"] = "{0}/{1}".format(request.url, event.id)
+
+    return response
+
+
+@child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['PUT'])
+@consumes("application/json")
+@produces('application/json')
+def update_event(child_id, event_id):
+    """Update a Event for a given id."""
+    event_request = request.json
+
+    # Validate request against schema
+    # try:
+    #     validate(event_request, event_schema, format_checker=FormatChecker())
+    # except ValidationError as e:
+    #     raise BadRequest(e.message)
+
+    # Retrieve existing event
+    event = Event.query.get_or_404(str(event_id))
+
+    # Update event
+    event.user_id = event_request["user_id"]
+    event.type = event_request["type"]
+    event.started_at = event_request["started_at"]
+    event.ended_at = event_request["ended_at"] if "ended_at" in event_request else None
+    event.feed_type = event_request["feed_type"] if "feed_type" in event_request else None
+    event.change_type = event_request["change_type"] if "change_type" in event_request else None
+    event.amount = event_request["amount"] if "amount" in event_request else None
+    event.unit = event_request["unit"] if "unit" in event_request else None
+    event.side = event_request["side"] if "side" in event_request else None
+    event.notes = event_request["notes"] if "notes" in event_request else None
+    event.updated_at = datetime.utcnow()
+
+    # Commit event to db
+    db.session.add(event)
+    db.session.commit()
+
+    return Response(response=repr(event),
+                    mimetype='application/json',
+                    status=200)
+
+
+@child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['DELETE'])
+@produces('application/json')
+def delete_event(child_id, event_id):
+    """Delete a Event for a given id."""
+    event = Event.query.get_or_404(str(event_id))
+
+    db.session.delete(event)
     db.session.commit()
     return Response(response=None,
                     mimetype='application/json',
