@@ -41,7 +41,7 @@
                         "name": "email_address",
                         "in": "query",
                         "description": "User's email address",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "string",
                             "format": "email"
@@ -50,22 +50,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A paged array of users",
-                        "headers": {
-                            "x-next": {
-                                "description": "A link to the next page of responses",
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        },
+                        "description": "Expected response to a valid request",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/UserResponse"
-                                    }
+                                    "$ref": "#/components/schemas/UserResponse"
                                 }
                             }
                         }
@@ -389,7 +378,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "query",
                         "description": "Users ID",
                         "required": true,
@@ -401,15 +390,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A paged array of children",
-                        "headers": {
-                            "x-next": {
-                                "description": "A link to the next page of responses",
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        },
+                        "description": "An array of children",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -849,10 +830,6 @@
                     "email_address": {
                         "type": "string",
                         "format": "email"
-                    },
-                    "password": {
-                        "type": "string",
-                        "format": "password"
                     },
                     "first_name": {
                         "type": "string"
