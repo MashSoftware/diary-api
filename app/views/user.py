@@ -31,10 +31,7 @@ def get_users():
         user = User.query.filter_by(email_address=email_query).first_or_404()
         result = user.as_dict()
     else:
-        users = User.query.order_by(User.created_at).all()
-        result = []
-        for user in users:
-            result.append(user.as_dict())
+        raise BadRequest("'email_address' is a required query parameter")
 
     return Response(response=json.dumps(result, sort_keys=True, separators=(',', ':')),
                     mimetype='application/json',
