@@ -668,47 +668,6 @@
             }
         },
         "/events/{id}": {
-            "get": {
-                "summary": "Retrieves a specific event",
-                "operationId": "get_event",
-                "tags": [
-                    "Events"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "The id of the event to retrieve",
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Expected response to a valid request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/EventResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "put": {
                 "summary": "Updates a specific event",
                 "operationId": "update_event",
