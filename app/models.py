@@ -123,7 +123,7 @@ class Event(db.Model):
     amount = db.Column(db.Float, nullable=True)
     unit = db.Column(db.String, nullable=True)
     side = db.Column(db.String, nullable=True)
-    description = db.Column(db.String, nullable=True)
+    notes = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, index=True)
     updated_at = db.Column(db.DateTime(timezone=True), nullable=True)
 
@@ -143,7 +143,6 @@ class Event(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "child_id": self.child_id,
             "type": self.type,
             "feed_type": self.feed_type,
             "change_type": self.change_type,
@@ -152,7 +151,7 @@ class Event(db.Model):
             "amount": self.amount,
             "unit": self.unit,
             "side": self.side,
-            "description": self.description,
+            "notes": self.notes,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at else self.updated_at
         }
