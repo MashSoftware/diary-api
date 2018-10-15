@@ -30,8 +30,48 @@
     ],
     "paths": {
         "/users": {
+            "post": {
+                "summary": "Create a new user",
+                "operationId": "create_user",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "description": "New user data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Newly created user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
-                "summary": "Retrieves a list of users",
+                "summary": "Retrieve a user by email address",
                 "operationId": "get_users",
                 "tags": [
                     "Users"
@@ -70,51 +110,11 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "summary": "Creates a new user",
-                "operationId": "create_user",
-                "tags": [
-                    "Users"
-                ],
-                "requestBody": {
-                    "description": "New user data to create",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Newly created user",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UserResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/users/{id}": {
             "get": {
-                "summary": "Retrieves a specific user",
+                "summary": "Retrieve a specific user",
                 "operationId": "get_user",
                 "tags": [
                     "Users"
@@ -155,7 +155,7 @@
                 }
             },
             "delete": {
-                "summary": "Deletes a specific user",
+                "summary": "Delete a specific user",
                 "operationId": "delete_user",
                 "tags": [
                     "Users"
@@ -191,7 +191,7 @@
         },
         "/users/{id}/profile": {
             "put": {
-                "summary": "Updates a specifc users profile",
+                "summary": "Update a specifc users profile",
                 "operationId": "update_user_profile",
                 "tags": [
                     "Users"
@@ -245,7 +245,7 @@
         },
         "/users/{id}/password": {
             "put": {
-                "summary": "Updates a specifc users password",
+                "summary": "Update a specifc users password",
                 "operationId": "update_user_password",
                 "tags": [
                     "Users"
@@ -319,7 +319,7 @@
         },
         "/auth/login": {
             "post": {
-                "summary": "Authenticate a user",
+                "summary": "Authenticate user credentials",
                 "operationId": "login_user",
                 "tags": [
                     "Authentication"
@@ -370,8 +370,48 @@
             }
         },
         "/children": {
+            "post": {
+                "summary": "Create a new child",
+                "operationId": "create_child",
+                "tags": [
+                    "Children"
+                ],
+                "requestBody": {
+                    "description": "New child data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChildRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Newly created child",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChildResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
-                "summary": "Retrieves a list of children",
+                "summary": "Retrieve a list of children for a user",
                 "operationId": "get_children",
                 "tags": [
                     "Children"
@@ -413,61 +453,21 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "summary": "Creates a new child",
-                "operationId": "create_child",
-                "tags": [
-                    "Children"
-                ],
-                "requestBody": {
-                    "description": "New child data to create",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ChildRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Newly created child",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ChildResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
-        "/children/{id}": {
+        "/children/{child_id}": {
             "get": {
-                "summary": "Retrieves a specific child",
+                "summary": "Retrieve a specific child",
                 "operationId": "get_child",
                 "tags": [
                     "Children"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "child_id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the child to retrieve",
+                        "description": "The unique id of the child",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -498,17 +498,17 @@
                 }
             },
             "put": {
-                "summary": "Updates a specific child",
+                "summary": "Update a specific child",
                 "operationId": "update_child",
                 "tags": [
                     "Children"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "child_id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the child to update",
+                        "description": "The unique id of the child",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -539,17 +539,17 @@
                 }
             },
             "delete": {
-                "summary": "Deletes a specific child",
+                "summary": "Delete a specific child",
                 "operationId": "delete_child",
                 "tags": [
                     "Children"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "child_id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the child to delete",
+                        "description": "The unique id of the child",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -573,19 +573,71 @@
                 }
             }
         },
-        "/events": {
+        "/children/{child_id}/events": {
+            "post": {
+                "summary": "Create a new event for a child",
+                "operationId": "create_event",
+                "tags": [
+                    "Events"
+                ],
+                "parameters": [
+                    {
+                        "name": "child_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique id of the child",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "New event data to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Newly created event",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
-                "summary": "Retrieves a list of events",
+                "summary": "Retrieves a list of events for a child",
                 "operationId": "get_events",
                 "tags": [
                     "Events"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "query",
-                        "description": "ChildResponse's ID",
+                        "name": "child_id",
+                        "in": "path",
                         "required": true,
+                        "description": "The unique id of the child",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -625,61 +677,31 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "summary": "Creates a new event",
-                "operationId": "create_event",
-                "tags": [
-                    "Events"
-                ],
-                "requestBody": {
-                    "description": "New event data to create",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EventRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Newly created event",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/EventResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
-        "/events/{id}": {
+        "/children/{child_id}/events/{event_id}": {
             "put": {
-                "summary": "Updates a specific event",
+                "summary": "Update a specific event for a child",
                 "operationId": "update_event",
                 "tags": [
                     "Events"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "child_id",
                         "in": "path",
                         "required": true,
-                        "description": "The id of the event to update",
+                        "description": "The unique id of the child",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique id of the event",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -710,17 +732,27 @@
                 }
             },
             "delete": {
-                "summary": "Deletes a specific event",
+                "summary": "Delete a specific event for a child",
                 "operationId": "delete_event",
                 "tags": [
                     "Events"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "child_id",
                         "in": "path",
                         "required": true,
-                        "description": "The ID of the event to delete",
+                        "description": "The unique id of the child",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique id of the event",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
