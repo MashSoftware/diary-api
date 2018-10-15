@@ -993,9 +993,23 @@
                         "type": "string",
                         "enum": [
                             "sleep",
-                            "breastfeed",
                             "feed",
                             "change"
+                        ]
+                    },
+                    "feed_type": {
+                        "type": "string",
+                        "enum": [
+                            "formula",
+                            "breastfeed"
+                        ]
+                    },
+                    "change_type": {
+                        "type": "string",
+                        "enum": [
+                            "wet",
+                            "soiled",
+                            "dry"
                         ]
                     },
                     "started_at": {
@@ -1014,13 +1028,21 @@
                     },
                     "unit": {
                         "type": "string",
+                        "enum": [
+                            "ml",
+                            "fl oz"
+                        ],
                         "nullable": true
                     },
                     "side": {
                         "type": "string",
+                        "enum": [
+                            "left",
+                            "right"
+                        ],
                         "nullable": true
                     },
-                    "description": {
+                    "notes": {
                         "type": "string",
                         "nullable": true
                     }
@@ -1045,9 +1067,23 @@
                         "type": "string",
                         "enum": [
                             "sleep",
-                            "breastfeed",
                             "feed",
                             "change"
+                        ]
+                    },
+                    "feed_type": {
+                        "type": "string",
+                        "enum": [
+                            "formula",
+                            "breastfeed"
+                        ]
+                    },
+                    "change_type": {
+                        "type": "string",
+                        "enum": [
+                            "wet",
+                            "soiled",
+                            "dry"
                         ]
                     },
                     "started_at": {
@@ -1066,13 +1102,21 @@
                     },
                     "unit": {
                         "type": "string",
+                        "enum": [
+                            "ml",
+                            "fl oz"
+                        ],
                         "nullable": true
                     },
                     "side": {
                         "type": "string",
+                        "enum": [
+                            "left",
+                            "right"
+                        ],
                         "nullable": true
                     },
-                    "description": {
+                    "notes": {
                         "type": "string",
                         "nullable": true
                     },
