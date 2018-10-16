@@ -143,6 +143,7 @@ class Event(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
+            "child_id": self.child_id,
             "type": self.type,
             "feed_type": self.feed_type,
             "change_type": self.change_type,
