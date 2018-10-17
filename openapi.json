@@ -1000,8 +1000,9 @@
                     "feed_type": {
                         "type": "string",
                         "enum": [
-                            "formula",
-                            "breastfeed"
+                            "breast",
+                            "bottle",
+                            "formula"
                         ]
                     },
                     "change_type": {
@@ -1074,8 +1075,9 @@
                     "feed_type": {
                         "type": "string",
                         "enum": [
-                            "formula",
-                            "breastfeed"
+                            "breast",
+                            "bottle",
+                            "formula"
                         ]
                     },
                     "change_type": {
