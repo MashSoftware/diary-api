@@ -19,30 +19,30 @@ flask run
 
 ### Users
 
-* `POST /users` - Create a new user
-* `GET /users?email_address=<email_address>` - Retrieve a user by email address
-* `GET /users/<uuid:id>` - Retrieve a specific user
-* `PUT /users/<uuid:id>/profile` - Update a specific users profile
-* `PUT /users/<uuid:id>/password` - Update a specific users password
-* `DELETE /users/<uuid:id>` - Delete a specific user
+* `POST v1/users` - Create a new user
+* `GET v1/users?email_address=<email_address>` - Retrieve a user by email address
+* `GET v1/users/<uuid:id>` - Retrieve a specific user
+* `PUT v1/users/<uuid:id>/profile` - Update a specific users profile
+* `PUT v1/users/<uuid:id>/password` - Update a specific users password
+* `DELETE v1/users/<uuid:id>` - Delete a specific user
 
 ### Authentication
 
-* `POST /login` - Authenticate user credentials
+* `POST v1/login` - Authenticate user credentials
 
 ### Children
 
-* `POST /children` - Create a new child
-* `GET /children?user_id=<uuid:user_id>` Retrieve a list of children for a user
-* `GET /children/<uuid:id>` - Retrieve a specific child
-* `PUT /children/<uuid:id>` - Update a specific child
-* `DELETE /children/<uuid:id>` - Delete a specific child
+* `POST v1/children` - Create a new child
+* `GET v1/children?user_id=<uuid:user_id>` Retrieve a list of children for a user
+* `GET v1/children/<uuid:id>` - Retrieve a specific child
+* `PUT v1/children/<uuid:id>` - Update a specific child
+* `DELETE v1/children/<uuid:id>` - Delete a specific child
 
 ### Events
 
-* `POST /children/<uuid:id>/events` - Create a new event for a child
-* `GET /children/<uuid:id>/events` - Retrieve a list of events for a child
-* `PUT /children/<uuid:id>/events/<uuid:id>` - Update a specific event for a child
-* `DELETE /children/<uuid:id>/events/<uuid:id>` - Delete a specific event for a child
+* `POST v1/children/<uuid:id>/events` - Create a new event for a child
+* `GET v1/children/<uuid:id>/events` - Retrieve a list of events for a child
+* `PUT v1/children/<uuid:id>/events/<uuid:id>` - Update a specific event for a child
+* `DELETE v1/children/<uuid:id>/events/<uuid:id>` - Delete a specific event for a child
 
 More details are in the [OpenAPI Specification](openapi.json)
