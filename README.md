@@ -46,3 +46,113 @@ flask run
 * `DELETE v1/children/<uuid:id>/events/<uuid:id>` - Delete a specific event for a child
 
 More details are in the [OpenAPI Specification](openapi.json)
+
+## Event Types
+
+Example requests to `POST v1/children/<uuid:id>/events` endpoint:
+
+### Sleep
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "sleep",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "ended_at": null,
+    "notes": "Very tired!"
+}
+```
+
+### Breast feed
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "feed",
+    "feed_type": "breast",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "ended_at": null,
+    "side": "left",
+    "notes": "Very hungry!"
+}
+```
+
+### Bottle feed
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "feed",
+    "feed_type": "bottle",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "ended_at": null,
+    "amount": 12.5,
+    "unit": "ml",
+    "notes": "Very hungry!"
+}
+```
+
+### Formula feed
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "feed",
+    "feed_type": "formula",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "ended_at": null,
+    "amount": 12.5,
+    "unit": "ml",
+    "notes": "Very hungry!"
+}
+```
+
+### Wet change
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "change",
+    "change_type": "wet",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "notes": "Small wee"
+}
+```
+
+### Soiled change
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "change",
+    "change_type": "soiled",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "notes": "Very smelly!"
+}
+```
+
+### Dry change
+
+Request body:
+
+```json
+{
+    "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
+    "type": "change",
+    "change_type": "dry",
+    "started_at": "2018-07-21T21:21:59.123456",
+    "notes": "Clean"
+}
+```
