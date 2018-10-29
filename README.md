@@ -49,6 +49,21 @@ More details are in the [OpenAPI Specification](openapi.json)
 
 ## Event Types
 
+### Point-in-time events
+
+These events occurred at a single point in time. The `started_at` and `ended_at` attributes are set to the same valid [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) formatted timestamp.
+
+* Change
+
+### Period of time events
+
+These events occurred over a period of time. The `started_at` attribute is always set. The `ended_at` attribute may be `null` if the event is currently ongoing, or a valid [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) formatted timestamp if the event has ended.
+
+* Sleep
+* Feed
+
+## Event Examples
+
 Example requests to `POST v1/children/<uuid:id>/events` endpoint:
 
 ### Sleep
