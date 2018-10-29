@@ -18,6 +18,25 @@ child_schema = openapi["components"]["schemas"]["ChildRequest"]
 event_schema = openapi["components"]["schemas"]["EventRequest"]
 
 
+@child.route("", methods=['GET'])
+@produces('application/json')
+def get_children():
+    """Get Children for a given User ID"""
+    user_query = request.args.get('user_id', type=str)
+    result = []
+
+    if user_query is not None:
+        user = User.query.get_or_404(user_query)
+        for child in user.children:
+            result.append(child.as_dict())
+    else:
+        raise BadRequest("'user_id' is a required query parameter")
+
+    return Response(response=json.dumps(result, sort_keys=True, separators=(',', ':')),
+                    mimetype='application/json',
+                    status=200)
+
+
 @child.route("", methods=['POST'])
 @consumes("application/json")
 @produces('application/json')
@@ -65,7 +84,7 @@ def create_child():
 @child.route("/<uuid:child_id>", methods=['GET'])
 @produces('application/json')
 def get_child(child_id):
-    """Get a Child for a given id."""
+    """Get a Child for a given ID."""
     child = Child.query.get_or_404(str(child_id))
 
     return Response(response=repr(child),
@@ -77,7 +96,7 @@ def get_child(child_id):
 @consumes("application/json")
 @produces('application/json')
 def update_child(child_id):
-    """Update a Child for a given id."""
+    """Update a Child for a given ID."""
     child_request = request.json
 
     # Validate request against schema
@@ -117,7 +136,7 @@ def update_child(child_id):
 @child.route("/<uuid:child_id>", methods=['DELETE'])
 @produces('application/json')
 def delete_child(child_id):
-    """Delete a Child for a given id."""
+    """Delete a Child for a given ID."""
     child = Child.query.get_or_404(str(child_id))
 
     db.session.delete(child)
@@ -185,7 +204,7 @@ def create_event(child_id):
 @consumes("application/json")
 @produces('application/json')
 def update_event(child_id, event_id):
-    """Update a Event for a given id."""
+    """Update a Event for a given ID."""
     event_request = request.json
 
     # Validate request against schema
@@ -222,7 +241,7 @@ def update_event(child_id, event_id):
 @child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['DELETE'])
 @produces('application/json')
 def delete_event(child_id, event_id):
-    """Delete a Event for a given id."""
+    """Delete a Event for a given ID."""
     event = Event.query.get_or_404(str(event_id))
 
     db.session.delete(event)
