@@ -4,7 +4,7 @@ from datetime import date, datetime
 from flask import Blueprint, Response, request, url_for
 from flask_negotiate import consumes, produces
 from jsonschema import FormatChecker, ValidationError, validate
-from werkzeug.exceptions import BadRequest, NotImplemented
+from werkzeug.exceptions import BadRequest
 
 from app import db
 from app.models import Child, Event, User
@@ -204,7 +204,11 @@ def create_event(child_id):
 @produces('application/json')
 def get_event(child_id, event_id):
     """Get an Event for a given ID."""
-    raise NotImplemented()
+    event = Event.query.get_or_404(str(event_id))
+
+    return Response(response=repr(event),
+                    mimetype='application/json',
+                    status=200)
 
 
 @child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['PUT'])
