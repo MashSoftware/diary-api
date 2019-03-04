@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.1",
+    "openapi": "3.0.2",
     "info": {
         "version": "0.1.0",
         "title": "Diary API",
@@ -680,6 +680,57 @@
             }
         },
         "/children/{child_id}/events/{event_id}": {
+            "get": {
+                "summary": "Retrieve a specific event",
+                "operationId": "get_event",
+                "tags": [
+                    "Events"
+                ],
+                "parameters": [
+                    {
+                        "name": "child_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique id of the child",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique id of the event",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "put": {
                 "summary": "Update a specific event for a child",
                 "operationId": "update_event",
