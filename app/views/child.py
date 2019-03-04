@@ -1,13 +1,13 @@
 import json
 from datetime import date, datetime
 
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, request, url_for
 from flask_negotiate import consumes, produces
-from werkzeug.exceptions import BadRequest
+from jsonschema import FormatChecker, ValidationError, validate
+from werkzeug.exceptions import BadRequest, NotImplemented
 
 from app import db
 from app.models import Child, Event, User
-from jsonschema import FormatChecker, ValidationError, validate
 
 child = Blueprint('child', __name__)
 
@@ -76,7 +76,7 @@ def create_child():
 
     # Create response
     response = Response(response=repr(child), mimetype='application/json', status=201)
-    response.headers["Location"] = "{0}/{1}".format(request.url, child.id)
+    response.headers["Location"] = url_for('child.get_child', child_id=child.id)
 
     return response
 
@@ -195,9 +195,16 @@ def create_event(child_id):
 
     # Create response
     response = Response(response=repr(event), mimetype='application/json', status=201)
-    response.headers["Location"] = "{0}/{1}".format(request.url, event.id)
+    response.headers["Location"] = url_for('child.get_event', child_id=child_id, event_id=event.id)
 
     return response
+
+
+@child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['GET'])
+@produces('application/json')
+def get_event(child_id, event_id):
+    """Get an Event for a given ID."""
+    raise NotImplemented()
 
 
 @child.route("/<uuid:child_id>/events/<uuid:event_id>", methods=['PUT'])

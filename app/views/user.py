@@ -1,14 +1,14 @@
 import json
 from datetime import datetime
 
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, request, url_for
 from flask_negotiate import consumes, produces
+from jsonschema import FormatChecker, ValidationError, validate
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import BadRequest, Conflict, Unauthorized
 
 from app import db
 from app.models import User
-from jsonschema import FormatChecker, ValidationError, validate
 
 user = Blueprint('user', __name__)
 
@@ -69,7 +69,7 @@ def create_user():
 
     # Create response
     response = Response(response=repr(user), mimetype='application/json', status=201)
-    response.headers["Location"] = "{0}/{1}".format(request.url, user.id)
+    response.headers["Location"] = url_for('user.get_user', id=user.id)
 
     return response
 
