@@ -43,6 +43,7 @@ flask run
 
 * `POST v1/children/<uuid:id>/events` - Create a new event for a child
 * `GET v1/children/<uuid:id>/events` - Retrieve a list of events for a child
+* `GET v1/children/<uuid:id>/events/<uuid:id>` - Retrieve a specific event for a child
 * `PUT v1/children/<uuid:id>/events/<uuid:id>` - Update a specific event for a child
 * `DELETE v1/children/<uuid:id>/events/<uuid:id>` - Delete a specific event for a child
 
