@@ -1101,6 +1101,22 @@
                 }
             },
             "EventResponse": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/Sleep"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BreastFeed"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BottleFeed"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Change"
+                    }
+                ]
+            },
+            "Sleep": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -1123,20 +1139,106 @@
                             "change"
                         ]
                     },
-                    "feed_type": {
+                    "started_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ended_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                }
+            },
+            "BreastFeed": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "child_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
                         "type": "string",
                         "enum": [
-                            "breast",
-                            "bottle",
-                            "formula"
+                            "sleep",
+                            "feed",
+                            "change"
                         ]
                     },
-                    "change_type": {
+                    "started_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "ended_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "side": {
                         "type": "string",
                         "enum": [
-                            "wet",
-                            "soiled",
-                            "dry"
+                            "left",
+                            "right"
+                        ],
+                        "nullable": true
+                    },
+                    "notes": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                }
+            },
+            "BottleFeed": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "child_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "sleep",
+                            "feed",
+                            "change"
                         ]
                     },
                     "started_at": {
@@ -1161,13 +1263,55 @@
                         ],
                         "nullable": true
                     },
-                    "side": {
+                    "notes": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                }
+            },
+            "Change": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "child_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
                         "type": "string",
                         "enum": [
-                            "left",
-                            "right"
-                        ],
-                        "nullable": true
+                            "sleep",
+                            "feed",
+                            "change"
+                        ]
+                    },
+                    "change_type": {
+                        "type": "string",
+                        "enum": [
+                            "wet",
+                            "soiled",
+                            "dry"
+                        ]
+                    },
+                    "occurred_at": {
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "notes": {
                         "type": "string",
