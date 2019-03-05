@@ -515,6 +515,17 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "description": "Child data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChildRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Expected response to a valid request",
@@ -840,17 +851,21 @@
                 "properties": {
                     "email_address": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "oliver.smith@example.com"
                     },
                     "password": {
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "example": "CorrectHorseBatteryStaple"
                     },
                     "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Oliver"
                     },
                     "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Smith"
                     },
                     "children": {
                         "type": "array",
@@ -871,13 +886,16 @@
                     },
                     "email_address": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "oliver.smith@example.com"
                     },
                     "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Oliver"
                     },
                     "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Smith"
                     },
                     "children": {
                         "type": "array",
@@ -917,14 +935,17 @@
                 ],
                 "properties": {
                     "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Oliver"
                     },
                     "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Smith"
                     },
                     "email_address": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "oliver.smith@example.com"
                     }
                 }
             },
@@ -936,11 +957,13 @@
                 "properties": {
                     "current_password": {
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "example": "CorrectHorseBatteryStaple"
                     },
                     "new_password": {
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "example": "sw7^YWT9I5fzX!MPQ8u%KTpD0kib^Yl7"
                     }
                 }
             },
@@ -952,11 +975,13 @@
                 "properties": {
                     "email_address": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "oliver.smith@example.com"
                     },
                     "password": {
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "example": "CorrectHorseBatteryStaple"
                     }
                 }
             },
@@ -968,10 +993,12 @@
                 ],
                 "properties": {
                     "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Amelia"
                     },
                     "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Smith"
                     },
                     "date_of_birth": {
                         "type": "string",
@@ -995,10 +1022,12 @@
                         "format": "uuid"
                     },
                     "first_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Amelia"
                     },
                     "last_name": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Smith"
                     },
                     "date_of_birth": {
                         "type": "string",
@@ -1076,7 +1105,8 @@
                     "amount": {
                         "type": "number",
                         "format": "float",
-                        "nullable": true
+                        "nullable": true,
+                        "example": 4.2
                     },
                     "unit": {
                         "type": "string",
@@ -1150,7 +1180,8 @@
                     },
                     "notes": {
                         "type": "string",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "Very tired!"
                     },
                     "created_at": {
                         "type": "string",
@@ -1205,7 +1236,8 @@
                     },
                     "notes": {
                         "type": "string",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "Very hungry!"
                     },
                     "created_at": {
                         "type": "string",
@@ -1253,7 +1285,8 @@
                     "amount": {
                         "type": "number",
                         "format": "float",
-                        "nullable": true
+                        "nullable": true,
+                        "example": 4.2
                     },
                     "unit": {
                         "type": "string",
@@ -1265,7 +1298,8 @@
                     },
                     "notes": {
                         "type": "string",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "Very hungry!"
                     },
                     "created_at": {
                         "type": "string",
@@ -1315,7 +1349,8 @@
                     },
                     "notes": {
                         "type": "string",
-                        "nullable": true
+                        "nullable": true,
+                        "example": "Very smelly!"
                     },
                     "created_at": {
                         "type": "string",
