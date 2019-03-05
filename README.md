@@ -53,7 +53,7 @@ More details are in the [OpenAPI Specification](openapi.json)
 
 ### Point-in-time events
 
-These events occurred at a single point in time. The `started_at` and `ended_at` attributes are set to the same valid [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) formatted timestamp.
+These events occurred at a single point in time. They have a single `occurred_at` attribute set to the a valid [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) formatted timestamp.
 
 * Change
 
@@ -141,7 +141,7 @@ Request body:
     "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
     "type": "change",
     "change_type": "wet",
-    "started_at": "2018-07-21T21:21:59.123456",
+    "occurred_at": "2018-07-21T21:21:59.123456",
     "notes": "Small wee"
 }
 ```
@@ -155,7 +155,7 @@ Request body:
     "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
     "type": "change",
     "change_type": "soiled",
-    "started_at": "2018-07-21T21:21:59.123456",
+    "occurred_at": "2018-07-21T21:21:59.123456",
     "notes": "Very smelly!"
 }
 ```
@@ -169,7 +169,7 @@ Request body:
     "user_id": "eac11681-532e-4ec1-8d33-18337485e083",
     "type": "change",
     "change_type": "dry",
-    "started_at": "2018-07-21T21:21:59.123456",
+    "occurred_at": "2018-07-21T21:21:59.123456",
     "notes": "Clean"
 }
 ```
