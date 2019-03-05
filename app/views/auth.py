@@ -3,11 +3,11 @@ from datetime import datetime
 
 from flask import Blueprint, Response, request
 from flask_negotiate import consumes, produces
+from jsonschema import FormatChecker, ValidationError, validate
 from werkzeug.exceptions import BadRequest, Unauthorized
 
 from app import db
 from app.models import User
-from jsonschema import FormatChecker, ValidationError, validate
 
 auth = Blueprint('auth', __name__)
 
@@ -30,10 +30,12 @@ def login_user():
     except ValidationError as e:
         raise BadRequest(e.message)
 
+    # Check user is registered
     user = User.query.filter_by(email_address=login_request["email_address"].lower()).first()
     if user is None:
         raise Unauthorized()
 
+    # Check user credentials
     if user.check_password(login_request["password"]):
         user.login_at = datetime.utcnow()
         db.session.add(user)
