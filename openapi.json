@@ -112,7 +112,7 @@
                 }
             }
         },
-        "/users/{id}": {
+        "/users/{user_id}": {
             "get": {
                 "summary": "Retrieve a specific user",
                 "operationId": "get_user",
@@ -121,7 +121,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to retrieve",
@@ -162,7 +162,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to delete",
@@ -189,7 +189,7 @@
                 }
             }
         },
-        "/users/{id}/profile": {
+        "/users/{user_id}/profile": {
             "put": {
                 "summary": "Update a specifc users profile",
                 "operationId": "update_user_profile",
@@ -198,7 +198,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to update",
@@ -243,7 +243,7 @@
                 }
             }
         },
-        "/users/{id}/password": {
+        "/users/{user_id}/password": {
             "put": {
                 "summary": "Update a specifc users password",
                 "operationId": "update_user_password",
@@ -252,7 +252,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "user_id",
                         "in": "path",
                         "required": true,
                         "description": "The id of the user to update",
