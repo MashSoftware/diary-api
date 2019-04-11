@@ -18,7 +18,7 @@ jinja2==2.10.1            # via flask
 jsonschema==3.0.1
 mako==1.0.8               # via alembic
 markupsafe==1.1.1         # via jinja2, mako
-psycopg2==2.7.7
+psycopg2==2.8.1
 pycparser==2.19           # via cffi
 pyrsistent==0.14.11       # via jsonschema
 python-dateutil==2.8.0    # via alembic
